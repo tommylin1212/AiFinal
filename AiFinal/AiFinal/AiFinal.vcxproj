@@ -114,6 +114,7 @@
     <ClInclude Include="agent.h" />
     <ClInclude Include="globalgl.h" />
     <ClInclude Include="help.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="myvec.h" />
     <ClInclude Include="ngon.h" />
     <ClInclude Include="point.h" />
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="agent.cpp" />
     <ClCompile Include="help.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="myvec.cpp" />
     <ClCompile Include="ngon.cpp" />
     <ClCompile Include="point.cpp" />

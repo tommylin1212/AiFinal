@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "point.h"
+#include "world.h"
 #include "myvec.h"
 #include "ngon.h"
 #include "polyline.h"
@@ -9,11 +10,10 @@
 #include <map>
 using namespace std;
 
-int refreshMills = 5;
+int refreshMills = 50;
 int MY_WIN_H = 0;
 int MY_WIN_W = 0;
-int MY_MOUSE_X = 0;
-int MY_MOUSE_Y = 0;
+world myWorld;
 
 
 #if defined(WIN32)
@@ -30,12 +30,15 @@ void delay(int ms) {
 #endif
 
 void drawworld() {
-	ngon temp(6,MY_MOUSE_X,MY_MOUSE_Y,150,0);
-	temp.plot(GL_LINE_LOOP);
+	glPointSize(4);
+	glColor3f(1.0, 1.0, 1.0);
+	myWorld.update();
+	myWorld.draw();
+	
 }
 
 void initworld() {
-	
+	myWorld.init(MY_WIN_W, MY_WIN_H, 10, 100, 0);
 }
 
 void myDisplay() {
@@ -63,8 +66,7 @@ void myInit(int w, int h) {
 }
 void myMouseFun(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON&&state == GLUT_DOWN) {
-		MY_MOUSE_Y = MY_WIN_H-y;
-		MY_MOUSE_X = x;
+
 		
 	}
 	if (button == GLUT_RIGHT_BUTTON&&state == GLUT_DOWN) {

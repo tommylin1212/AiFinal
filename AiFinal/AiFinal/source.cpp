@@ -9,7 +9,7 @@
 #include <iostream>
 #include "myvec.h"
 #include <string>
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+//#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 int width = 1280;
 int height = 540;
 using namespace std;
