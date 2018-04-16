@@ -38,7 +38,7 @@ void drawworld() {
 }
 
 void initworld() {
-	myWorld.init(MY_WIN_W, MY_WIN_H, 10, 100, 0);
+	myWorld.init(MY_WIN_W, MY_WIN_H, 50, 100, 10);
 }
 
 void myDisplay() {

@@ -8,21 +8,31 @@
 #include <limits>
 class agent {
 public:
-	agent(point pos,double health,double maxspeed, double maxforce,float food, float poison);
-	void doSteering(point target);
+	agent(point pos);
+	agent(point pos, std::vector<double> dna);
+	void doSteering(point target,bool type);
 	void eat(std::vector<item>*);
 	void draw();
+	point getPos();
+	void health(double);
+	double getHealth();
+	std::vector<double> getDNA();
+	void age(int);
+	int getAge();
+
 private:
 	point m_pos;//pos +=vel
 	myvec m_vel;//old acc
 	myvec m_acc;//(desired-vel).limit(maxforce) 
 	myvec m_desired; //targetpos-locationpos normalize then mult by max speed;
 	double m_health;
-	float m_foodfactor;
-	float m_poisonfactor;
+	std::vector<double> m_dna;
 	double m_maxspeed;
 	double m_maxforce;
 	int m_size=10;
+	bool m_wandering;
+	point m_wander;
+	int m_counter;
 
 };
 

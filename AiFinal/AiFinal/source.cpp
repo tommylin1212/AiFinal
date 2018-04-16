@@ -11,7 +11,7 @@
 #include <string>
 //#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 int width = 1280;
-int height = 540;
+int height = 960;
 using namespace std;
 //<<<<<<<<<<<<<<<<<<<<<<<< main >>>>>>>>>>>>>>>>>>>>>>
 int main(int argc, char **argv) {
