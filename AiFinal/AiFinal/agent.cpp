@@ -4,6 +4,18 @@ using namespace std;
 int maxF = 5;//max attraction
 int maxS = 100;//max sight
 int minS = 10;//min sight
+double M_PI = 3.145989;
+agent::agent(){
+	
+	m_health = 1;
+	m_maxspeed = 5;
+	m_maxforce = 0.9;
+	m_size = 15;
+	m_counter = 0;
+	m_vel = myvec(1, 1).norm();
+	m_wandering = false;
+	m_wander= point(rand() % glutGet(GLUT_WINDOW_WIDTH), rand() % glutGet(GLUT_WINDOW_HEIGHT), 0);
+}
 
 agent::agent(point pos){
 	m_pos = pos;
@@ -14,7 +26,7 @@ agent::agent(point pos){
 	m_counter = 0;
 	m_vel = myvec(1, 1).norm();
 	m_wandering = false;
-	m_wander= point(rand() % glutGet(GLUT_WINDOW_WIDTH), rand() % glutGet(GLUT_WINDOW_HEIGHT), 0);
+	m_wander = point(rand() % glutGet(GLUT_WINDOW_WIDTH), rand() % glutGet(GLUT_WINDOW_HEIGHT), 0);
 	//no dna need to create
 	m_dna.push_back((rand() % (2 * maxF))-maxF + 0.1);//food attractiveness
 	m_dna.push_back((rand() % (2 * maxF)) - maxF + 0.1);//poison attractiveness
@@ -47,7 +59,28 @@ agent::agent(point pos,vector<double> dna){
 	}
 }
 
+bool agent::outOfBounds() {
+	int border = 100;
+	double xmax = glutGet(GLUT_WINDOW_WIDTH);
+	double ymax = glutGet(GLUT_WINDOW_HEIGHT);
+	double xpos=this->m_pos.m_xpos;
+	double ypos = this->m_pos.m_ypos;
+	if ((border > xpos) || (xpos > xmax-border)) {
+		reCenter();
+		return true;
+	}
+	if ((border > ypos) || (ypos > ymax-border)) {
+		reCenter();
+		return true;
+	}
+	return false;
+}
+
+
 void agent::doSteering(point target,bool type){
+	if (outOfBounds()) {
+		return;
+	}
 	m_desired = myvec(target.m_xpos - m_pos.m_xpos, target.m_ypos - m_pos.m_ypos).norm();
 	
 	m_desired=m_desired.sprod(m_maxspeed);
@@ -64,6 +97,23 @@ void agent::doSteering(point target,bool type){
 	m_vel = m_vel.add(m_acc);
 	
 	m_vel=m_vel.norm().sprod(m_maxspeed);//go as fast as possible in that direction
+	m_pos = m_pos.add(m_vel);
+}
+
+void agent::reCenter(){
+	double maxxpos = glutGet(GLUT_WINDOW_WIDTH);
+	double maxypos = glutGet(GLUT_WINDOW_HEIGHT);
+	m_desired = myvec(maxxpos/2 - m_pos.m_xpos, maxypos/2 - m_pos.m_ypos).norm();
+
+	m_desired = m_desired.sprod(m_maxspeed);
+	m_acc = m_desired.sub(m_vel);
+	
+	if (m_acc.m_length > m_maxforce) {
+		m_acc = m_acc.norm().sprod(m_maxforce);
+	}
+	m_vel = m_vel.add(m_acc);
+
+	m_vel = m_vel.norm().sprod(m_maxspeed);//go as fast as possible in that direction
 	m_pos = m_pos.add(m_vel);
 }
 
@@ -118,8 +168,7 @@ void agent::draw() {
 	body.plot(GL_LINE_LOOP);
 }
 
-point agent::getPos()
-{
+point agent::getPos(){
 	return m_pos;
 }
 
@@ -127,13 +176,11 @@ void agent::health(double num){
 	m_health += num;
 }
 
-double agent::getHealth()
-{
+double agent::getHealth(){
 	return m_health;
 }
 
-std::vector<double> agent::getDNA()
-{
+std::vector<double> agent::getDNA(){
 	return m_dna;
 }
 
@@ -141,8 +188,75 @@ void agent::age(int i){
 	m_counter += i;
 }
 
-int agent::getAge()
-{
+
+
+int agent::getAge(){
 	return m_counter;
 }
 
+player::player(point pos){
+	m_pos = pos;
+}
+
+void player::steer(int rln){
+	heading += rln;
+	heading = (int)floor(heading)% 360;
+}
+
+point player::deadReckon(){
+	double x0, y0, x1, y1;
+	x0 = m_pos.m_xpos;
+	y0 = m_pos.m_ypos;
+	x1 = sin((heading*(M_PI / 180)));
+	y1 = cos((heading*(M_PI / 180)));
+	x0 += (x1*m_maxspeed);
+	y0 += (y1*m_maxspeed);
+	point next_desired = point(x0, y0,0);
+	return next_desired;
+}
+
+void player::doSteering(point pos){
+	m_desired = myvec(pos.m_xpos - m_pos.m_xpos, pos.m_ypos - m_pos.m_ypos).norm();
+
+	m_desired = m_desired.sprod(m_maxspeed);
+	m_acc = m_desired.sub(m_vel);
+
+	if (m_acc.m_length > m_maxforce) {
+		m_acc = m_acc.norm().sprod(m_maxforce);
+	}
+	m_vel = m_vel.add(m_acc);
+
+	m_vel = m_vel.norm().sprod(m_maxspeed);//go as fast as possible in that direction
+	m_pos = m_pos.add(m_vel);
+}
+
+void player::draw(){
+	double angle = atan2(m_vel.m_y, m_vel.m_x);
+	glColor3f(0,0, 1);
+	//m_pos.plot();
+	ngon body(5, m_pos.m_xpos, m_pos.m_ypos, m_size, angle);
+	glPointSize(4);
+	body.plot(GL_LINE_LOOP);
+}
+void player::eat(std::vector<item>* items) {
+	double record = numeric_limits<double>::infinity();//distance of closest food;
+	int closest = -1;//index of closest food;
+	for (int i = 0; i < items->size(); i++) {
+		double dist = myvec((*items)[i].getPos().m_xpos - m_pos.m_xpos, (*items)[i].getPos().m_ypos - m_pos.m_ypos).m_length;
+		if (dist < record) {
+			record = dist;
+			closest = i;
+		}
+	}
+	if (record < m_size) {//if we are close enough to eat, let's eat
+		if ((*items)[closest].getType()) {
+			health(0.1);
+			m_counter++;
+		}
+		else {
+			health(-1);
+		}
+		items->erase(items->begin() + closest);
+	}
+	doSteering(deadReckon());
+}

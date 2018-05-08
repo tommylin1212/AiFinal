@@ -8,9 +8,11 @@
 #include <limits>
 class agent {
 public:
+	agent();
 	agent(point pos);
 	agent(point pos, std::vector<double> dna);
 	void doSteering(point target,bool type);
+	void reCenter();
 	void eat(std::vector<item>*);
 	void draw();
 	point getPos();
@@ -18,23 +20,39 @@ public:
 	double getHealth();
 	std::vector<double> getDNA();
 	void age(int);
+	bool outOfBounds();
+	
 	int getAge();
-
-private:
+protected:
 	point m_pos;//pos +=vel
 	myvec m_vel;//old acc
 	myvec m_acc;//(desired-vel).limit(maxforce) 
 	myvec m_desired; //targetpos-locationpos normalize then mult by max speed;
 	double m_health;
-	std::vector<double> m_dna;
 	double m_maxspeed;
 	double m_maxforce;
 	int m_size=10;
+	int m_counter;
+private:
+	std::vector<double> m_dna;
 	bool m_wandering;
 	point m_wander;
-	int m_counter;
-
+	
 };
+
+class player : public agent {
+public:
+	player(point pos);
+	void steer(int rln);//left is -1 right is 1 nothing is 0
+	point deadReckon();
+	void doSteering(point pos);
+	void draw();
+	void eat(std::vector<item>* items);
+private:
+	double heading;
+};
+
+
 
 
 

@@ -9,7 +9,7 @@
 #include "Utils.h"
 #include <map>
 using namespace std;
-
+player* player1;
 int refreshMills = 50;
 int MY_WIN_H = 0;
 int MY_WIN_W = 0;
@@ -37,8 +37,14 @@ void drawworld() {
 	
 }
 
+void initGame(){
+	initPlayers();
+	initworld();
+	myWorld.getPlayer(player1);
+}
+
 void initworld() {
-	myWorld.init(MY_WIN_W, MY_WIN_H, 50, 100, 10);
+	myWorld.init(MY_WIN_W, MY_WIN_H, 20, 100, 10);
 }
 
 void myDisplay() {
@@ -46,6 +52,9 @@ void myDisplay() {
 	drawworld();
 	glFlush();
 	
+}
+void initPlayers(){
+	player1 = new player(point(glutGet(GLUT_WINDOW_WIDTH)/2, glutGet(GLUT_WINDOW_HEIGHT)/2, 0));
 }
 void timer(int value) {
 	glutPostRedisplay();     
@@ -61,7 +70,7 @@ void myInit(int w, int h) {
 	glClear(GL_COLOR_BUFFER_BIT); 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	myResize(w, h);
-	initworld();
+	initGame();
 	timer(0);
 }
 void myMouseFun(int button, int state, int x, int y) {
@@ -79,9 +88,10 @@ void myMouseFun(int button, int state, int x, int y) {
 void myKeyFun(unsigned char key, int x, int y) {
 	switch (key) {
 	case'a':
-		
+		player1->steer(-7);
 		break;
 	case'd':
+		player1->steer(7);
 		break;
 	case'h':
 		break;

@@ -13,8 +13,10 @@ void myInit(int, int);
 
 void myMouseFun(int button, int state, int x, int y);
 
-void myMouseMotionFun(int x, int y);
+void initGame();
+void initworld();
 void myDisplay();
+void initPlayers();
 
 void myKeyFun(unsigned char key, int x, int y);
 
