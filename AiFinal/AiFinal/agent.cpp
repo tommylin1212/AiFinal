@@ -2,14 +2,14 @@
 #include <iostream>
 using namespace std;
 int maxF = 5;//max attraction
-int maxS = 100;//max sight
+int maxS = 150;//max sight
 int minS = 10;//min sight
 double M_PI = 3.145989;
 agent::agent(){
 	
 	m_health = 1;
 	m_maxspeed = 5;
-	m_maxforce = 0.9;
+	m_maxforce = 0.8;
 	m_size = 15;
 	m_counter = 0;
 	m_vel = myvec(1, 1).norm();
@@ -21,7 +21,7 @@ agent::agent(point pos){
 	m_pos = pos;
 	m_health = 1;
 	m_maxspeed = 5;
-	m_maxforce = 0.9;
+	m_maxforce = 0.8;
 	m_size = 15;
 	m_counter = 0;
 	m_vel = myvec(1, 1).norm();
@@ -32,14 +32,14 @@ agent::agent(point pos){
 	m_dna.push_back((rand() % (2 * maxF)) - maxF + 0.1);//poison attractiveness
 	m_dna.push_back((rand() % (maxS-minS)) + minS);//food sight
 	m_dna.push_back((rand() % (maxS - minS)) + minS);//poison sight
-	cout << "food: " << m_dna[0] << " poison: " << m_dna[1] << " fs: "<<m_dna[2]<<" ps: "<<m_dna[3]<<endl;
+	//cout << "food: " << m_dna[0] << " poison: " << m_dna[1] << " fs: "<<m_dna[2]<<" ps: "<<m_dna[3]<<endl;
 }
 
 agent::agent(point pos,vector<double> dna){
 	m_pos = pos;
 	m_health = 1;
 	m_maxspeed = 5;
-	m_maxforce = 0.5;
+	m_maxforce = 0.8;
 	m_size = 15;
 	m_vel = myvec(1, 1).norm();
 	m_dna = dna;
@@ -165,11 +165,14 @@ void agent::draw() {
 	//m_pos.plot();
 	ngon body(3, m_pos.m_xpos, m_pos.m_ypos, m_size, angle);
 	glPointSize(4);
-	body.plot(GL_LINE_LOOP);
+	body.plot(GL_POLYGON);
 }
 
 point agent::getPos(){
 	return m_pos;
+}
+void agent::setPos(point p){
+	m_pos = p;
 }
 
 void agent::health(double num){
@@ -196,6 +199,8 @@ int agent::getAge(){
 
 player::player(point pos){
 	m_pos = pos;
+	m_size = 15;
+	m_health = 2;
 }
 
 void player::steer(int rln){
@@ -232,11 +237,11 @@ void player::doSteering(point pos){
 
 void player::draw(){
 	double angle = atan2(m_vel.m_y, m_vel.m_x);
-	glColor3f(0,0, 1);
+	glColor3f(1 - (m_health), m_health, 0);
 	//m_pos.plot();
 	ngon body(5, m_pos.m_xpos, m_pos.m_ypos, m_size, angle);
 	glPointSize(4);
-	body.plot(GL_LINE_LOOP);
+	body.plot(GL_POLYGON);
 }
 void player::eat(std::vector<item>* items) {
 	double record = numeric_limits<double>::infinity();//distance of closest food;

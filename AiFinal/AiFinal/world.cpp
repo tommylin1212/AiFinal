@@ -1,10 +1,13 @@
 #include "world.h"
-
+#include "help.h"
 world::world(){
 	level = 0;
 }
 
 void world::init(int xsize,int ysize, int agents, int food, int poison){
+	for (int i = 0; i < players.size(); i++){
+		players[i]->setPos(point(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2, 0));
+	}
 	m_xsize = xsize;
 	m_ysize = ysize;
 	m_asize = agents;
@@ -31,12 +34,20 @@ void world::init(int xsize,int ysize, int agents, int food, int poison){
 
 void world::update(){
 	int reproduce = 15-level;
+	if (players.size() == 0){
+		playerLost();
+	}
 	if (m_agents.size()>0) {
 		for (int i = 0; i < players.size(); i++) {
+			if (players[i]->getHealth() < 0){
+				m_items.push_back(item(players[i]->getPos(), true));//food
+				players.erase(players.begin() + i);
+			}
 			players[i]->eat(&m_items);
+			players[i]->health(-0.005);//decaying health
 		}
 		for (int i = 0; i < m_agents.size(); i++) {
-			if (m_items.size() < 1000) {
+			if (m_items.size() < 1000) {//poison becomes more common over time
 				if (rand() % 40 == 0) {
 					m_items.push_back(item(point((rand() % (glutGet(GLUT_WINDOW_WIDTH)-200))+100, (rand() % (glutGet(GLUT_WINDOW_HEIGHT) - 200)) + 100, 0), true));//food
 				}
@@ -46,7 +57,7 @@ void world::update(){
 			}
 			if (m_agents[i].getHealth() > 0) {
 				
-				if (m_agents[i].getAge() == reproduce) {
+				if ((m_agents[i].getAge() == reproduce)&&(m_agents.size()>150)) {
 					m_agents.push_back(agent(m_agents[i].getPos(),m_agents[i].getDNA()));
 					m_agents[i].age(-reproduce);
 				}
@@ -64,6 +75,12 @@ void world::update(){
 	}
 }
 
+void world::playerLost(){
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+	glutDisplayFunc(Lost);
+	glFlush();
+}
 void world::draw(){
 	for (int i = 0; i < players.size(); i++) {
 		players[i]->draw();
@@ -77,7 +94,10 @@ void world::draw(){
 }
 
 void world::playerWin(){
-	//do something
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+	glutDisplayFunc(Won);
+	glFlush();
 }
 
 void world::getPlayer(player * play){

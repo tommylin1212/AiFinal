@@ -13,6 +13,7 @@ public:
 	agent(point pos, std::vector<double> dna);
 	void doSteering(point target,bool type);
 	void reCenter();
+	void setPos(point p);
 	void eat(std::vector<item>*);
 	void draw();
 	point getPos();
@@ -43,7 +44,7 @@ private:
 class player : public agent {
 public:
 	player(point pos);
-	void steer(int rln);//left is -1 right is 1 nothing is 0
+	void steer(int rln);//left is - right is + nothing is 0
 	point deadReckon();
 	void doSteering(point pos);
 	void draw();

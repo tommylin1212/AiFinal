@@ -11,6 +11,7 @@ public:
 	void update();
 	void draw();
 	void playerWin();
+	void playerLost();
 	void doGame();
 	void getPlayer(player* play);
 private:

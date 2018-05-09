@@ -12,7 +12,8 @@ void timer(int value);
 void myInit(int, int);
 
 void myMouseFun(int button, int state, int x, int y);
-
+void Lost();
+void Won();
 void initGame();
 void initworld();
 void myDisplay();

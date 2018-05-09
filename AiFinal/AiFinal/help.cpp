@@ -53,6 +53,15 @@ void myDisplay() {
 	glFlush();
 	
 }
+
+void Lost(){
+	myWorld.playerLost();
+}
+
+void Won(){
+	myWorld.playerWin();
+}
+
 void initPlayers(){
 	player1 = new player(point(glutGet(GLUT_WINDOW_WIDTH)/2, glutGet(GLUT_WINDOW_HEIGHT)/2, 0));
 }
