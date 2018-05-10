@@ -7,6 +7,7 @@ world::world(){
 void world::init(int xsize,int ysize, int agents, int food, int poison){
 	for (int i = 0; i < players.size(); i++){
 		players[i]->setPos(point(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2, 0));
+		players[i]->setHealth(2.0);
 	}
 	m_xsize = xsize;
 	m_ysize = ysize;

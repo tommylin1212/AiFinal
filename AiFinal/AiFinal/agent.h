@@ -15,6 +15,7 @@ public:
 	void reCenter();
 	void setPos(point p);
 	void eat(std::vector<item>*);
+	void setHealth(double h);
 	void draw();
 	point getPos();
 	void health(double);

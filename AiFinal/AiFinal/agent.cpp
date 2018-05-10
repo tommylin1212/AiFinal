@@ -58,7 +58,10 @@ agent::agent(point pos,vector<double> dna){
 		}
 	}
 }
+void agent::setHealth(double h){
+	m_health = h; 
 
+}
 bool agent::outOfBounds() {
 	int border = 100;
 	double xmax = glutGet(GLUT_WINDOW_WIDTH);
