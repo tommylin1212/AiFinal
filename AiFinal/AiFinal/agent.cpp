@@ -4,7 +4,7 @@ using namespace std;
 int maxF = 5;//max attraction
 int maxS = 150;//max sight
 int minS = 10;//min sight
-double M_PI = 3.145989;
+double PI = 3.145989;
 agent::agent(){
 	
 	m_health = 1;
@@ -215,8 +215,8 @@ point player::deadReckon(){
 	double x0, y0, x1, y1;
 	x0 = m_pos.m_xpos;
 	y0 = m_pos.m_ypos;
-	x1 = sin((heading*(M_PI / 180)));
-	y1 = cos((heading*(M_PI / 180)));
+	x1 = sin((heading*(PI / 180)));
+	y1 = cos((heading*(PI / 180)));
 	x0 += (x1*m_maxspeed);
 	y0 += (y1*m_maxspeed);
 	point next_desired = point(x0, y0,0);
