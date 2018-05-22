@@ -19,7 +19,7 @@ void point::getPos(GLdouble& x, GLdouble& y, GLdouble& z) {
 }
 
 void point::plot() {
-	//glPointSize(5);
+	//glPointSize(2);
 	//glColor3i(255, 0, 0);
 	glBegin(GL_POINTS);
 	glVertex3d(m_xpos, m_ypos, m_zpos);

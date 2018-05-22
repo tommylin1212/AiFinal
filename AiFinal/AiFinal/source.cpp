@@ -2,9 +2,7 @@
 #include "Utils.h"
 #include "point.h"
 #include "ngon.h"
-#include "polyline.h"
 #include "help.h"
-#include "polylinepic.h"
 #include "fstream"
 #include <iostream>
 #include "myvec.h"

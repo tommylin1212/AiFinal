@@ -8,7 +8,6 @@ public:
 	ngon();
 	ngon(GLint, GLdouble, GLdouble, GLdouble, GLdouble);
 	void plot(int);
-	void rosette();
 private:
 	GLint m_sides;
 	GLdouble m_xpos;

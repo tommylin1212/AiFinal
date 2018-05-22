@@ -5,7 +5,6 @@
 #include "world.h"
 #include "myvec.h"
 #include "ngon.h"
-#include "polyline.h"
 #include "Utils.h"
 #include <map>
 using namespace std;

@@ -28,16 +28,3 @@ void ngon::plot(int style) {
 	glEnd();
 }
 
-void ngon::rosette() {
-	GLdouble rpp = 2 * M_PI / m_sides;
-	glBegin(GL_LINES);
-	for (int i = 0; i <= m_sides; i++) {
-		for (int j = 0; j <= m_sides; j++) {
-			glVertex2d(m_xpos + (m_radius*cos((m_angle + (rpp*i)))),
-				m_ypos + (m_radius*sin((m_angle + (rpp*i)))));
-			glVertex2d(m_xpos + (m_radius*cos((m_angle + (rpp*j)))),
-				m_ypos + (m_radius*sin((m_angle + (rpp*j)))));
-		}
-	}
-	glEnd();
-}

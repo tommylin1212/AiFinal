@@ -8,7 +8,6 @@ item::item(){
 item::item(point pos,bool type){
 	m_pos = pos;
 	m_type = type;
-	//m_type = rand()%2;
 }
 
 point item::getPos(){
