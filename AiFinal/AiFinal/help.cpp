@@ -68,8 +68,6 @@ void timer(int value) {
 	glutPostRedisplay();     
 	glutTimerFunc(refreshMills, timer, 0);
 }
-void myResize(GLsizei width, GLsizei height) {
-}
 void myInit(int w, int h) {
 	srand(time(0));
 	setWorldWin(0, w, 0, h);
@@ -77,20 +75,9 @@ void myInit(int w, int h) {
 	MY_WIN_H = h;
 	glClear(GL_COLOR_BUFFER_BIT); 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	myResize(w, h);
 	initGame();
 	timer(0);
 }
-void myMouseFun(int button, int state, int x, int y) {
-	if (button == GLUT_LEFT_BUTTON&&state == GLUT_DOWN) {
-
-		
-	}
-	if (button == GLUT_RIGHT_BUTTON&&state == GLUT_DOWN) {
-		
-	}
-}
-
 
 
 void myKeyFun(unsigned char key, int x, int y) {
@@ -100,8 +87,6 @@ void myKeyFun(unsigned char key, int x, int y) {
 		break;
 	case'd':
 		player1->steer(7);
-		break;
-	case'h':
 		break;
 	case's':
 		refreshMills += 10;

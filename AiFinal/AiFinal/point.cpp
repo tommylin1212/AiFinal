@@ -19,8 +19,6 @@ void point::getPos(GLdouble& x, GLdouble& y, GLdouble& z) {
 }
 
 void point::plot() {
-	//glPointSize(2);
-	//glColor3i(255, 0, 0);
 	glBegin(GL_POINTS);
 	glVertex3d(m_xpos, m_ypos, m_zpos);
 	glEnd();
@@ -30,8 +28,7 @@ point point::add(myvec a) {
 	return point((m_xpos + a.m_x), (m_ypos + a.m_y), 0);
 }
 
-myvec point::sub(point p)
-{
+myvec point::sub(point p){
 	return myvec(p.m_xpos - m_xpos, p.m_ypos - m_ypos).norm();
 }
 

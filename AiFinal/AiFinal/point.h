@@ -9,7 +9,6 @@ public:
 	point();
 	point(GLdouble, GLdouble, GLdouble);
 	void getPos(GLdouble&, GLdouble&, GLdouble&);
-	//void setPos(GLdouble, GLdouble, GLdouble);
 	myvec sub(point);
 	GLdouble getDist(point);
 	void plot();
