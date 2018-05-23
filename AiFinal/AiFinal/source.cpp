@@ -6,6 +6,7 @@
 #include <iostream>
 #include "myvec.h"
 #include <string>
+#include <pthread.h>
 //#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 int width = 1280;
 int height = 960;
