@@ -83,10 +83,10 @@ void myInit(int w, int h) {
 void myKeyFun(unsigned char key, int x, int y) {
 	switch (key) {
 	case'a':
-		player1->steer(-7);
+		player1->steer(-5);
 		break;
 	case'd':
-		player1->steer(7);
+		player1->steer(5);
 		break;
 	case's':
 		refreshMills += 10;
