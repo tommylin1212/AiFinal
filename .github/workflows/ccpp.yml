@@ -14,5 +14,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: cd
-      run: cd AiFinal/AiFinal/ && make
+      run: sudo apt-get install freeglut3-dev && cd AiFinal/AiFinal/ && make
 
