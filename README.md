@@ -1,3 +1,5 @@
+![C/C++ CI](https://github.com/tommylin1212/AiFinal/workflows/C/C++%20CI/badge.svg)
+
 To compile on Linux:
 
 Ensure OpenGL is Installed:
