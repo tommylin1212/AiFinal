@@ -3,10 +3,10 @@
 #include "point.h"
 #include "ngon.h"
 #include "help.h"
-#include "fstream"
 #include <iostream>
 #include "myvec.h"
 #include <string>
+#include <pthread.h>
 //#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 int width = 1280;
 int height = 960;
@@ -18,16 +18,11 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(width, height);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Not Ants");
-
 	glutKeyboardFunc(myKeyFun);
-	glutMouseFunc(myMouseFun);
 	glutDisplayFunc(myDisplay);
 	myInit(width, height);
-	glutReshapeFunc(myResize);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // background is
-
 	glViewport(0, 0, width, height);
-
 	glutMainLoop();
 	return 0;
 }     // go into a perpetual loop

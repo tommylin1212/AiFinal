@@ -7,7 +7,6 @@
 class myvec {
 public:
 	myvec();
-
 	myvec(GLdouble, GLdouble);
 	myvec norm();
 	myvec perp();
